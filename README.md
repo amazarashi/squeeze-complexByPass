@@ -1,6 +1,6 @@
 # About
 
-SqueezeNet-complexByPass-ByPass by chainer
+SqueezeNet-complexByPass by chainer
 
 # Paper
 
