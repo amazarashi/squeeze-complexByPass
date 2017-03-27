@@ -33,15 +33,19 @@ class SqueezeComplexByPass(chainer.Chain):
             conv1 = L.Convolution2D(3,96,7,stride=2,initialW=initializer),
             fire2 = FireModule(96,16,64,64),
             fire2_conv = L.Convolution2D(96,128,1,initialW=initializer),
+            bn2 = L.BatchNormalization(128),
             fire3 = FireModule(128,16,64,64),
             fire4 = FireModule(128,32,128,128),
             fire4_conv = L.Convolution2D(128,256,1,initialW=initializer),
+            bn4 = L.BatchNormalization(256),
             fire5 = FireModule(256,32,128,128),
             fire6 = FireModule(256,48,192,192),
             fire6_conv = L.Convolution2D(256,384,1,initialW=initializer),
+            bn6 = L.BatchNormalization(384),
             fire7 = FireModule(384,48,192,192),
             fire8 = FireModule(384,64,256,256),
             fire8_conv = L.Convolution2D(384,512,1,initialW=initializer),
+            bn8 = L.BatchNormalization(512),
             fire9 = FireModule(512,64,256,256),
             conv10 = L.Convolution2D(512,category_num,1,stride=1,initialW=initializer),
         )
@@ -51,17 +55,17 @@ class SqueezeComplexByPass(chainer.Chain):
         h = F.relu(self.conv1(x))
         h = F.max_pooling_2d(h,3,stride=2,pad=1)
 
-        h = self.fire2(h,train=train) + F.relu(self.fire2_conv(h))
+        h = self.fire2(h,train=train) + self.bn2(F.relu(self.fire2_conv(h)),test=not train)
         h = self.fire3(h,train=train)
-        h = self.fire4(h,train=train) + F.relu(self.fire4_conv(h))
+        h = self.fire4(h,train=train) + self.bn4(F.relu(self.fire4_conv(h)),test=not train)
         h = F.max_pooling_2d(h,3,stride=2,pad=1)
 
         h = self.fire5(h,train=train)
-        h = self.fire6(h,train=train) + F.relu(self.fire6_conv(h))
+        h = self.fire6(h,train=train) + self.bn6(F.relu(self.fire6_conv(h)),test=not train)
         h = self.fire7(h,train=train)
         h = F.max_pooling_2d(h,3,stride=2,pad=1)
 
-        h = self.fire8(h,train=train) + F.relu(self.fire8_conv(h))
+        h = self.fire8(h,train=train) + self.bn8(F.relu(self.fire8_conv(h)),test=not train)
         h = F.max_pooling_2d(h,3,stride=2,pad=1)
 
         h = self.fire9(h,train=train)
