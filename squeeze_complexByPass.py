@@ -69,7 +69,7 @@ class SqueezeComplexByPass(chainer.Chain):
         h = F.max_pooling_2d(h,3,stride=2,pad=1)
 
         h = self.fire9(h,train=train)
-        h = F.dropout(h,ratio=0.5)
+        h = F.dropout(h,ratio=0.5,train=train)
 
         h = self.conv10(h)
         num, categories, y, x = h.data.shape
