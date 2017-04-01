@@ -19,9 +19,13 @@ python main.py -g 1
 
 # Inspection
 
-##### dataset
- - Cifar10 [link](https://www.cs.toronto.edu/~kriz/cifar.html)
+### dataset
+Cifar10 [link](https://www.cs.toronto.edu/~kriz/cifar.html)
 
-##### Result
+### Result
 
-coming soon..
+ - Optimizer momentumSGD (0.01[customized for batch normalization] ~ scheduling lineary )
+
+![accuracy](https://github.com/amazarashi/squeeze-complexByPass-chainer/blob/develop/result/log/accuracy.png "")
+
+![loss](https://github.com/amazarashi/squeeze-complexByPass-chainer/blob/develop/result/log/loss.png "")
